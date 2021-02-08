@@ -16,6 +16,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
 });
 
 app.use(require("./routes/api.js"));
+app.use(require("./routes/html.js"));
 // const Workout = require("./models/Workout");
 // app.get("/api/workouts", (req, res) => {
 //     Workout.find().then((workout) => {
