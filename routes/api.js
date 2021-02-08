@@ -13,18 +13,29 @@ router.get("/api/workouts/range", (req, res) => {
 })
 
 router.post("/api/workouts", ({body}, res) => {
-    const workout = new Workout(body);
-    Workout.create(workout)
-        .then(dbWorkout => {
-            res.json(dbWorkout);
-        })
-        .catch(err => {
-            res.json(err);
-        });
+    // console.log(body);
+    Workout.create(body)
+    .then(dbWorkout => {
+        console.log(dbWorkout);
+        res.json(dbWorkout);
+    })
+    .catch(err => {
+        res.json(err);
+    });
 });
 
 router.put("/api/workouts/:id", (req, res) => {
-
+    console.log(req.body);
+    console.log(req.params.id);
+    Workout.updateOne(
+        {id: req.params.id}, 
+        {$push: {exercises: req.body}}
+    ).then(dbWorkout => {
+        console.log(dbWorkout);
+        res.json(dbWorkout);
+    }).catch(err => {
+        res.json(err);
+    })
 })
 
 
