@@ -28,6 +28,7 @@ router.get("/api/workouts/range", (req, res) => {
     .then((workouts) => {
         workouts.splice(7);
         console.log(workouts);
+        res.json(workouts);
     })
     // Workout
     // .aggregate
