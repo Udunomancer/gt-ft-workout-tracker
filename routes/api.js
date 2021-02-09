@@ -40,10 +40,12 @@ router.get("/api/workouts/range", (req, res) => {
     //     }
     // ])
     .sort({day: -1})
+    .limit(7)
+    .sort({day: 1})
     .then((workouts) => {
-        if(workouts.length > 7) {
-            workouts.splice(7);
-        }
+        // if(workouts.length > 7) {
+        //     workouts.splice(7);
+        // }
         // console.log(workouts);
         res.json(workouts);
     })
