@@ -13,7 +13,16 @@ router.get("/api/workouts/range", (req, res) => {
     Workout
     .aggregate([
         {"$unwind": "$exercises"},
-        {"$addFields": {"totalDuration": {"$sum": "$exercises.duration"}}}
+        {"$addFields": {"totalDuration": {"$sum": "$exercises.duration"}}},
+        {"$group": {
+            "_id": "$_id",
+            "day": {"$first": "$day"},
+            "exercises": {
+                "$push": "$exercises"
+            },
+            "totalDuration": {"$sum": "$totalDuration"}
+            }
+        }
     ])
     .sort({day: -1})
     .then((workouts) => {
