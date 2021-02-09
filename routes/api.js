@@ -3,27 +3,42 @@ const router = express.Router();
 const Workout = require("../models/workout");
 
 router.get("/api/workouts", (req, res) => {
-    Workout.find().then((workout) => {
+    Workout.find()
+    // Workout
+    // .aggregate([
+    //     {"$unwind": "$exercises"},
+    //     {"$addFields": {"totalDuration": {"$sum": "$exercises.duration"}}},
+    //     {"$group": {
+    //         "_id": "$_id",
+    //         "day": {"$first": "$day"},
+    //         "exercises": {
+    //             "$push": "$exercises"
+    //         },
+    //         "totalDuration": {"$sum": "$totalDuration"}
+    //         }
+    //     }
+    // ])
+    .then((workout) => {
         res.json(workout);
     });
 });
 
 router.get("/api/workouts/range", (req, res) => {
-    // Workout.find()
-    Workout
-    .aggregate([
-        {"$unwind": "$exercises"},
-        {"$addFields": {"totalDuration": {"$sum": "$exercises.duration"}}},
-        {"$group": {
-            "_id": "$_id",
-            "day": {"$first": "$day"},
-            "exercises": {
-                "$push": "$exercises"
-            },
-            "totalDuration": {"$sum": "$totalDuration"}
-            }
-        }
-    ])
+    Workout.find()
+    // Workout
+    // .aggregate([
+    //     {"$unwind": "$exercises"},
+    //     {"$addFields": {"totalDuration": {"$sum": "$exercises.duration"}}},
+    //     {"$group": {
+    //         "_id": "$_id",
+    //         "day": {"$first": "$day"},
+    //         "exercises": {
+    //             "$push": "$exercises"
+    //         },
+    //         "totalDuration": {"$sum": "$totalDuration"}
+    //         }
+    //     }
+    // ])
     .sort({day: -1})
     .then((workouts) => {
         workouts.splice(7);
@@ -43,7 +58,7 @@ router.get("/api/workouts/range", (req, res) => {
 })
 
 router.post("/api/workouts", ({body}, res) => {
-    // console.log(body);
+    console.log(body);
     Workout.create({day: new Date()})
     .then(dbWorkout => {
         console.log(dbWorkout);
